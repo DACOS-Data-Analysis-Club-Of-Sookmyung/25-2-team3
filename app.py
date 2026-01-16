@@ -1,11 +1,28 @@
 import os
 import streamlit as st
 import torch
+import requests
 from transformers import (
     AutoTokenizer,
     AutoConfig,
     AutoModelForSequenceClassification,
 )
+
+E4_URL = "https://huggingface.co/naakyy/kcelectra-e4/resolve/main/e4.bin"
+BIN_PATH = "e4.bin"
+
+def download_model_if_needed():
+    if not os.path.exists(BIN_PATH):
+        with st.spinner("🔽 모델 다운로드 중 (최초 1회)..."):
+            r = requests.get(E4_URL, stream=True)
+            r.raise_for_status()
+            with open(BIN_PATH, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+
+download_model_if_needed()
+
 
 # -----------------------------
 # Streamlit 기본 설정
@@ -153,3 +170,4 @@ if run:
             st.write(f"- 임계값: **{threshold:.2f}**")
             st.write(f"- p(abusive): **{p:.4f}**")
             st.write("- 참고: 모델은 오탐/미탐이 있을 수 있습니다.")
+
