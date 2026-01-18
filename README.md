@@ -141,7 +141,7 @@ jupyter notebook kcelectra/KcElectra_비교.ipynb
     ├── kcelectra_output/            # 학습된 모델 (.gitignore)
     │
     └── test/                        # 성능 개선 실험
-        ├── 실험일지.md                # 실험 문서
+        ├── 개선 일지.md                # 실험 문서
         ├── 모델비교_테스트.ipynb     # 모델 비교 평가
         ├── E1_threshold_tuning.ipynb
         ├── E2_precision_metric.ipynb
